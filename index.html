@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aimicus</title>
+    <style>
+        /* CSS styles (same as before) */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* ... rest of your CSS code ... */
+        .see-more {
+            color: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app"></div>
+
+    <script>
+        const app = document.getElementById('app');
+        let currentScreen = 1;
+        let attemptsRemaining = 4;
+        let selectedTheme = null;
+        let selectedDetails1 = [];
+        let selectedDetails2 = [];
+        let selectedDetails3 = [];
+
+        function renderScreen() {
+            app.innerHTML = ''; // Clear the container
+
+            switch (currentScreen) {
+                case 1:
+                    renderLandingScreen();
+                    break;
+                case 2:
+                    renderIntroductionScreen();
+                    break;
+                case 3:
+                    renderFirstInputScreen();
+                    break;
+                // ... cases for other screens
+            }
+        }
+
+        function renderLandingScreen() {
+            app.innerHTML = `
+                <h1>ELEVATE YOUR LEADERSHIP DEVELOPMENT</h1>
+                <img src="https://drive.google.com/file/d/1atVQ62PHOwmBy3FUT5Z6Ud2Q1oIkgrnc/view?usp=sharing" alt="aimicus logo">
+                <h2>IN EASY STEPS:</h2>
+                <ul>
+                    <li>Select <b>1</b> futuristic development theme</li>
+                    <li>Chose the types of information you want for that theme</li>
+                    <li>Get your desired information</li>
+                    <li>Start over (upto <b>4</b> times in the same session) or Exit</li>
+                </ul>
+                <button onclick="nextScreen()">TRY THE DEMO</button>
+            `;
+        }
+
+        function renderIntroductionScreen() {
+            app.innerHTML = `
+                <h2>HIGHLIGHTS</h2>
+                <ul>
+                    <li><b>Futuristic themes</b> from <b>top thinkers</b></li>
+                    <li>Information about <b>pre-read</b></li>
+                    <li><b>Academies</b> of global corporations</li>
+                    <li>Top training <b>universities & firms</b></li>
+                    <li>Ideas & trainers using <b>fun methodologies</b></li>
+                    <li>Ideas & trainers using <b>new methodologies</b></li>
+                </ul>
+                <h2>BENEFITS</h2>
+                <ul>
+                    <li>More <b>choices</b> & best-in-class <b>information</b> at your fingertips</li>
+                    <li>Development decisions can also be <b>participant-forward</b></li>
+                    <li>Consistent progresss towards <b>future-readiness</b></li>
+                    <li>More potential <b>partners</b> to <b>co-create</b> new programs with</li>
+                    <li>More <b>possibilities</b> of <b>mix-n-match</b> depending on preferences & budgets</li>
+                </ul>
+                <button onclick="nextScreen()">START</button>
+            `;
+        }
+
+        function renderFirstInputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const randomizedThemes = shuffle(data).slice(0, 15);
+
+                    app.innerHTML = `
+                        <h1>WHAT LEADERS MUST DO: <span class="red">SELECT ANY 1</span></h1>
+                        <h2>(from the randomised 15 of 32 themes)</h2>
+                        <div class="grid-container">
+                            ${randomizedThemes.map(theme => {
+                                const imageUrl = theme[2]; // Get the Google Drive image link directly from the CSV
+
+                                return `<img src="${imageUrl}" alt="${theme[1]}" onclick="selectTheme(this, ${theme[0]})">`;
+                            }).join('')}
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        // ... other functions (renderSecondInputScreen, renderThirdInputScreen, etc.)
+
+        // ... helper functions (shuffle, CSVToArray, getColumnName)
+
+        // Initial rendering
+        renderScreen();
+    
+	// ... (previous code from screens 1-3) ...
+
+        function renderSecondInputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+
+                    app.innerHTML = `
+                        <h1>DESIRED DETAILS FOR THE SELECTED THEME:</h1>
+                        <h2>(choose from the 3 sets across both screens)</h2>
+                        <div class="grid-container">
+                            ${[7, 8, 11].map(columnIndex => {
+                                const imageUrl = data[0][columnIndex]; // Get the Google Drive image link from the first row of CSV
+
+                                return `<img src="${imageUrl}" alt="${getColumnName(columnIndex)}" onclick="selectDetail1(this, ${columnIndex})">`;
+                            }).join('')}
+                        </div>
+                        <div class="grid-container">
+                            ${[12, 14, 16].map(columnIndex => {
+                                const imageUrl = data[1][columnIndex]; // Get the Google Drive image link from the second row of CSV
+
+                                return `<img src="${imageUrl}" alt="${getColumnName(columnIndex)}" onclick="selectDetail1(this, ${columnIndex})">`;
+                            }).join('')}
+                        </div>
+                        <div class="grid-container">
+                            ${[20, 26, 28].map(columnIndex => {
+                                const imageUrl = data[2][columnIndex]; // Get the Google Drive image link from the third row of CSV
+
+                                return `<img src="${imageUrl}" alt="${getColumnName(columnIndex)}" onclick="selectDetail1(this, ${columnIndex})">`;
+                            }).join('')}
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        function renderThirdInputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+
+                    app.innerHTML = `
+                        <h1>DESIRED DETAILS FOR THE SELECTED THEME:</h1>
+                        <h2>(choose from the 3 sets across both screens)</h2>
+                        <div class="grid-container">
+                            ${[3, 4].map(columnIndex => {
+                                const imageUrl = data[3][columnIndex]; // Get the Google Drive image link from the fourth row of CSV
+
+                                return `<img src="${imageUrl}" alt="${getColumnName(columnIndex)}" onclick="selectDetail2(this, ${columnIndex})">`;
+                            }).join('')}
+                        </div>
+                        <div class="grid-container">
+                            ${[5, 6].map(columnIndex => {
+                                const imageUrl = data[4][columnIndex]; // Get the Google Drive image link from the fifth row of CSV
+
+                                return `<img src="${imageUrl}" alt="${getColumnName(columnIndex)}" onclick="selectDetail2(this, ${columnIndex})">`;
+                            }).join('')}
+                        </div>
+                        <div class="grid-container">
+                            ${[9, 10].map(columnIndex => {
+                                const imageUrl = data[5][columnIndex]; // Get the Google Drive image link from the sixth row of CSV
+
+                                return `<img src="${imageUrl}" alt="${getColumnName(columnIndex)}" onclick="selectDetail2(this, ${columnIndex})">`;
+                            }).join('')}
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        // ... (code for other screens and helper functions) ...
+	// ... (previous code from screens 1-5) ...
+
+        function renderFirstOutputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const selectedThemeData = data.find(row => row[0] === selectedTheme);
+
+                    app.innerHTML = `
+                        <div class="output-container">
+                            <h1>OUTPUT 1:</h1>
+                            ${selectedDetails1.map(detailIndex => {
+                                const detailText = selectedThemeData[detailIndex];
+                                const imageUrl = data[detailIndex - 1][2]; // Get the Google Drive image link from the corresponding row in CSV
+
+                                return `
+                                    <div class="output-section">
+                                        <img class="output-image" src="${imageUrl}" alt="${getColumnName(detailIndex)}">
+                                        <div class="output-text">${detailText}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        function renderSecondOutputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const selectedThemeData = data.find(row => row[0] === selectedTheme);
+
+                    app.innerHTML = `
+                        <div class="output-container">
+                            <h1>OUTPUT 2:</h1>
+                            ${selectedDetails2.map(detailIndex => {
+                                const detailText = selectedThemeData[detailIndex];
+                                const imageUrl = data[detailIndex - 1][2]; // Get the Google Drive image link from the corresponding row in CSV
+
+                                return `
+                                    <div class="output-section">
+                                        <img class="output-image" src="${imageUrl}" alt="${getColumnName(detailIndex)}">
+                                        <div class="output-text">${detailText}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        function renderThirdOutputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const selectedThemeData = data.find(row => row[0] === selectedTheme);
+
+                    app.innerHTML = `
+                        <div class="output-container">
+                            <h1>OUTPUT 3:</h1>
+                            ${selectedDetails3.map(detailIndex => {
+                                const detailText = selectedThemeData[detailIndex];
+                                const imageUrl = data[detailIndex - 1][2]; // Get the Google Drive image link from the corresponding row in CSV
+
+                                return `
+                                    <div class="output-section">
+                                        <img class="output-image" src="${imageUrl}" alt="${getColumnName(detailIndex)}">
+                                        <div class="output-text">${detailText}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        // ... (code for other screens and helper functions) ...
+	// ... (previous code from screens 1-8) ...
+
+        function renderFourthOutputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const selectedThemeData = data.find(row => row[0] === selectedTheme);
+
+                    // Example: Displaying data from columns 17 and 18
+                    const detailText1 = selectedThemeData[17];
+                    const detailText2 = selectedThemeData[18];
+                    const imageUrl1 = data[16][2]; // Get the Google Drive image link from row 17 in CSV
+                    const imageUrl2 = data[17][2]; // Get the Google Drive image link from row 18 in CSV
+
+                    app.innerHTML = `
+                        <div class="output-container">
+                            <h1>OUTPUT 4:</h1>
+                            <div class="output-section">
+                                <img class="output-image" src="${imageUrl1}" alt="${getColumnName(17)}">
+                                <div class="output-text">${detailText1}</div>
+                            </div>
+                            <div class="output-section">
+                                <img class="output-image" src="${imageUrl2}" alt="${getColumnName(18)}">
+                                <div class="output-text">${detailText2}</div>
+                            </div>
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        function renderFifthOutputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const selectedThemeData = data.find(row => row[0] === selectedTheme);
+
+                    // Example: Displaying data from columns 19 and 20
+                    const detailText1 = selectedThemeData[19];
+                    const detailText2 = selectedThemeData[20];
+                    const imageUrl1 = data[18][2]; // Get the Google Drive image link from row 19 in CSV
+                    const imageUrl2 = data[19][2]; // Get the Google Drive image link from row 20 in CSV
+
+                    app.innerHTML = `
+                        <div class="output-container">
+                            <h1>OUTPUT 5:</h1>
+                            <div class="output-section">
+                                <img class="output-image" src="${imageUrl1}" alt="${getColumnName(19)}">
+                                <div class="output-text">${detailText1}</div>
+                            </div>
+                            <div class="output-section">
+                                <img class="output-image" src="${imageUrl2}" alt="${getColumnName(20)}">
+                                <div class="output-text">${detailText2}</div>
+                            </div>
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        // ... (code for other screens and helper functions) ...
+	// ... (previous code from screens 1-11) ...
+
+        function renderSixthOutputScreen() {
+            fetch('Copy of aimicus-data.csv')
+                .then(response => response.text())
+                .then(text => {
+                    const data = CSVToArray(text);
+                    const selectedThemeData = data.find(row => row[0] === selectedTheme);
+
+                    // Example: Displaying data from columns 21 and 22
+                    const detailText1 = selectedThemeData[21];
+                    const detailText2 = selectedThemeData[22];
+                    const imageUrl1 = data[20][2]; // Get the Google Drive image link from row 21 in CSV
+                    const imageUrl2 = data[21][2]; // Get the Google Drive image link from row 22 in CSV
+
+                    app.innerHTML = `
+                        <div class="output-container">
+                            <h1>OUTPUT 6:</h1>
+                            <div class="output-section">
+                                <img class="output-image" src="${imageUrl1}" alt="${getColumnName(21)}">
+                                <div class="output-text">${detailText1}</div>
+                            </div>
+                            <div class="output-section">
+                                <img class="output-image" src="${imageUrl2}" alt="${getColumnName(22)}">
+                                <div class="output-text">${detailText2}</div>
+                            </div>
+                        </div>
+                        <button onclick="nextScreen()">NEXT</button>
+                    `;
+                });
+        }
+
+        function renderConcludingScreen() {
+            app.innerHTML = `
+                <h1>YOU'RE DONE!</h1>
+                <h2>In this session,</h2>
+                <h2>you have <span class="red">${attemptsRemaining}</span> of 4 attempts remaining</h2>
+                ${attemptsRemaining > 0 ? `<button onclick="startOver()">START OVER</button>` : ''}
+                <button onclick="exitApp()">EXIT</button>
+            `;
+        }
+
+        // ... (helper functions: nextScreen, startOver, exitApp, selectTheme, selectDetail1, selectDetail2, selectDetail3, shuffle, CSVToArray, getColumnName) ...
+	// ... (previous code from screens 1-12) ...
+
+        function nextScreen() {
+            currentScreen++;
+            renderScreen();
+        }
+
+        function startOver() {
+            if (attemptsRemaining > 0) {
+                attemptsRemaining--;
+                currentScreen = 3; // Go back to the first input screen
+                selectedTheme = null;
+                selectedDetails1 = [];
+                selectedDetails2 = [];
+                selectedDetails3 = [];
+                renderScreen();
+            }
+        }
+
+        function exitApp() {
+            app.innerHTML = `
+                <h1>THANK YOU FOR USING AIMICUS!</h1>
+            `;
+        }
+
+        function selectTheme(img, themeId) {
+            // Deselect previously selected theme if any
+            const previouslySelected = document.querySelector('.selected-theme');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected-theme');
+            }
+
+            // Select the clicked theme
+            img.classList.add('selected-theme');
+            selectedTheme = themeId;
+        }
+
+        function selectDetail1(img, detailIndex) {
+            if (selectedDetails1.includes(detailIndex)) {
+                selectedDetails1 = selectedDetails1.filter(i => i !== detailIndex);
+                img.classList.remove('selected-detail');
+            } else if (selectedDetails1.length < 2) {
+                selectedDetails1.push(detailIndex);
+                img.classList.add('selected-detail');
+            }
+        }
+
+        function selectDetail2(img, detailIndex) {
+            if (selectedDetails2.includes(detailIndex)) {
+                selectedDetails2 = selectedDetails2.filter(i => i !== detailIndex);
+                img.classList.remove('selected-detail');
+            } else if (selectedDetails2.length < 1) {
+                selectedDetails2.push(detailIndex);
+                img.classList.add('selected-detail');
+            }
+        }
+
+        function selectDetail3(img, detailIndex) {
+            if (selectedDetails3.includes(detailIndex)) {
+                selectedDetails3 = selectedDetails3.filter(i => i !== detailIndex);
+                img.classList.remove('selected-detail');
+            } else if (selectedDetails3.length < 1) {
+                selectedDetails3.push(detailIndex);
+                img.classList.add('selected-detail');
+            }
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function CSVToArray(strData, strDelimiter = ",") {
+            // ... (CSV parsing code - same as before) ...
+        }
+
+        function getColumnName(index) {
+            const columnNames = [
+                "NO.", "WHAT LEADERS MUST DO", "ROW IMAGE URL", "THINKER & WORK", "APPLYING THE THOUGHT", "TED TALK",
+                "PUBLISHED ARTICLE", "TRAINING CENTERS OF CORPORATIONS", "TRAINERS IN NORTH AMERICA & EUROPE",
+                "TRAINERS IN SINGAPORE & AUSTRALIA", "TRAINERS IN INDIA", "IDEA OF USING FINE ARTS & PERFORMING ART",
+                "TRAINERS USING FINE ARTS & PERFORMING AR", "IDEA OF USING GAMES & ACTIVITIES", "TRAINERS USING GAMES & ACTIVITIES",
+                "IDEA OF USING DESIGN & ENTERTAINMENT", "TRAINERS USING DESIGN & ENTERTAINMENT", "IDEA OF USING CASE STUDY & PRESENTATION",
+                "TRAINERS USING CASE STUDY & PRESENTATION", "IDEA OF USING AR & VR", "TRAINERS USING AR & VR", "IDEA OF USING GAMIFICATION & SIMULATION",
+                "TRAINERS USING GAMIFICATION & SIMULATION", "IDEA OF USING BIO-FEEDBACK & NEURO-PROFI", "TRAINERS USING BIO-FEEDBACK & NEURO-PROF",
+                "IDEA OF USING REAL-TIME BEHAVIOUR ANALYT", "TRAINERS USING REAL-TIME BEHAVIOUR ANALY", "IDEA OF USING EMBEDDED MICRO-LEARNING",
+                "TRAINERS USING EMBEDDED MICRO-LEARNING", "IDEA OF USING GEN AI", "TRAINERS USING GEN AI"
+            ];
+            return columnNames[index];
+        }
+    </script>
+</body>
+</html>
