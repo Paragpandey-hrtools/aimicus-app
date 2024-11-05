@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIMicus - Leadership Development</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #007bff;
+            line-height: 1.4;
+        }
+        .logo {
+            width: 300px;
+            height: auto;
+            margin: 20px 0;
+        }
+        .section-header {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .images-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .image-item {
+            margin: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .image-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .image-item.selected {
+            border-color: #28a745;
+        }
+        .action-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .action-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Screen -->
+    <div id="landing-screen">
+        <h1>Welcome to AIMicus</h1>
+        <p>Your AI Companion for Leadership Development</p>
+        <button class="action-button" onclick="showHighlights()">TRY THE DEMO</button>
+    </div>
+
+    <!-- Highlights Screen -->
+    <div id="highlights-screen" style="display: none;">
+        <div class="section-header">HIGHLIGHTS</div>
+        <ul>
+            <li>Futuristic themes from top thinkers</li>
+            <li>Information about pre-read</li>
+        </ul>
+        <button class="action-button" onclick="showFirstInputScreen()">START</button>
+    </div>
+
+    <!-- First Input Screen -->
+    <div id="first-input-screen" style="display: none;">
+        <div class="section-header">Choose Your Theme</div>
+        <div class="images-container" id="images-container"></div>
+        <button class="action-button" id="next-button" onclick="goToNextScreen()">Next</button>
+    </div>
+
+    <script>
+        let data = [];
+        let selectedImage = null;
+
+        // Load and parse CSV data
+        async function loadCSV() {
+            try {
+                const response = await fetch('aimicus-data.csv');
+                const csvText = await response.text();
+                parseCSV(csvText);
+            } catch (error) {
+                console.error("Failed to load CSV:", error);
+                alert("Error loading data. Please try again.");
+            }
+        }
+
+        // Parse CSV data into structured format
+        function parseCSV(csvText) {
+            const rows = csvText.split('\n');
+            rows.forEach((row, index) => {
+                const columns = row.split(',');
+                if (index > 0 && columns.length > 1) {
+                    data.push({
+                        theme: columns[1],
+                        rowImageURL: columns[2]
+                    });
+                }
+            });
+        }
+
+        // Show Highlights Screen
+        function showHighlights() {
+            document.getElementById('landing-screen').style.display = 'none';
+            document.getElementById('highlights-screen').style.display = 'block';
+        }
+
+        // Show First Input Screen
+        function showFirstInputScreen() {
+            document.getElementById('highlights-screen').style.display = 'none';
+            document.getElementById('first-input-screen').style.display = 'block';
+            displayRandomImages();
+        }
+
+        // Display 15 random images from data
+        function displayRandomImages() {
+            const imagesContainer = document.getElementById('images-container');
+            imagesContainer.innerHTML = ""; // Clear container
+            const selectedIndexes = [];
+            while (selectedIndexes.length < 15 && data.length >= 15) {
+                const randomIndex = Math.floor(Math.random() * data.length);
+                if (!selectedIndexes.includes(randomIndex)) {
+                    selectedIndexes.push(randomIndex);
+                }
+            }
+            selectedIndexes.forEach(index => {
+                const imageItem = document.createElement('div');
+                imageItem.classList.add('image-item');
+                const imageUrl = data[index].rowImageURL;
+                imageItem.innerHTML = `<img src="${imageUrl}" alt="${data[index].theme}">`;
+                imageItem.onclick = () => selectImage(imageItem);
+                imagesContainer.appendChild(imageItem);
+            });
+        }
+
+        // Handle image selection
+        function selectImage(imageElement) {
+            if (selectedImage) {
+                selectedImage.classList.remove('selected');
+            }
+            imageElement.classList.add('selected');
+            selectedImage = imageElement;
+            document.getElementById('next-button').style.display = 'inline-block';
+        }
+
+        // Placeholder for next screen
+        function goToNextScreen() {
+            alert("Next screen will be displayed");
+        }
+
+        // Load CSV data on page load
+        loadCSV();
+    </script>
+</body>
+</html>
