@@ -511,6 +511,74 @@ body {
     }
 }
 
+@media (max-width: 480px) {
+    /* Headers and subheaders */
+    .header h1,
+    .output-header,
+    .input-screen-header h1,
+    .intro-header {
+        font-size: 20px !important;
+    }
+
+    .steps,
+    .input-screen-subheader,
+    .section-header {
+        font-size: 18px !important;
+    }
+
+    /* All regular text */
+    .bullet-points,
+    .intro-points,
+    .theme-text,
+    .info-item-text,
+    .expandable-text {
+        font-size: 16px !important;
+    }
+
+    /* Buttons */
+    .action-button {
+        font-size: 18px !important;
+        padding: 10px 20px !important;
+    }
+
+    /* Two column layouts */
+    .theme-grid,
+    .column-grid,
+    .column-grid.grid-4,
+    .column-grid.grid-5,
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        padding: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Prevent overflow */
+    .output-container,
+    .dotted-section,
+    .theme-content,
+    .info-item {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px !important;
+        box-sizing: border-box !important;
+        margin: 10px 0 !important;
+    }
+
+    .column-item,
+    .theme-item,
+    .theme-image {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+    
 </style>
 </head>
 
