@@ -609,7 +609,27 @@ body {
         object-fit: contain !important;
         margin: 5px auto !important;
     }
-}    
+    /* Override for theme grid spacing */
+.theme-grid {
+    gap: 5px !important;
+    padding: 5px 10px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* Override for first input screen images */
+#first-input-screen .theme-item {
+    aspect-ratio: 1.2 !important;
+    margin-bottom: 5px !important;
+    width: 100% !important;
+}
+
+/* Override for info grid images */
+.info-grid .info-item img {
+    width: 200px !important;
+    height: 200px !important;
+    margin: 5px auto !important;
+}
+}  
 </style>
 </head>
 
