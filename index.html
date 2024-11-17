@@ -271,15 +271,27 @@ body {
 
 /* Output Screen styles */
 .output-container {
-    width: 100%;
+    width: 95%;
     max-width: 1200px;
     padding: 20px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 }
 
+@media (max-width: 1024px) {
+    .output-container {
+        width: 90%;
+        padding: 15px;
+    }
+    
+    .theme-content {
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+}
 .output-header {
     font-size: 36px;
     text-align: center;
