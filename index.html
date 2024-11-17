@@ -1032,8 +1032,11 @@ function showScreen(screenId) {
         screen.classList.remove('active');
     });
     document.getElementById(screenId).classList.add('active');
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
-
 function getRandomThemes(themes, count) {
     let shuffled = [...themes].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
