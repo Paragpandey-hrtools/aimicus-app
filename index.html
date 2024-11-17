@@ -577,8 +577,39 @@ body {
         max-width: 100% !important;
         height: auto !important;
     }
-}
-    
+
+    /* Fix for screen 3 (theme selection) images */
+    #first-input-screen .theme-item {
+        aspect-ratio: 1.2 !important;
+        margin-bottom: 15px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #first-input-screen .theme-item img {
+        object-fit: contain !important;
+        width: 100% !important;
+        height: 85% !important;
+    }
+
+    /* Fix for screen 6 (first output) info icons */
+    .info-grid {
+        gap: 30px !important;
+    }
+
+    .info-grid .info-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .info-grid .info-item img {
+        width: 140px !important;
+        height: 140px !important;
+        object-fit: contain !important;
+        margin: 10px auto !important;
+    }
+}    
 </style>
 </head>
 
