@@ -114,7 +114,7 @@ body {
 
 .intro-points li {
     margin-bottom: 15px;
-    line-height: 1.4;
+    line-height: 1.2;
 }
 
 /* Input screen styles */
@@ -759,9 +759,8 @@ body {
 <div id="third-output-screen" class="screen">
     <div class="output-container">
         <h1 class="output-header" style="font-size: 32px;">MORE DETAILS FOR THE SELECTED THEME:</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">FUN METHODOLOGY (1)</h1>
-
+        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING FUN METHODOLOGY (1)</h1>
+        
         <!-- First Selected Idea -->
         <div class="theme-content">
             <div class="theme-image">
@@ -798,9 +797,8 @@ body {
 <div id="fourth-output-screen" class="screen">
     <div class="output-container">
         <h1 class="output-header" style="font-size: 32px;">MORE DETAILS FOR THE SELECTED THEME:</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">FUN METHODOLOGY (2)</h1>
-
+        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING FUN METHODOLOGY (2)</h1>
+        
         <!-- Second Selected Idea -->
         <div class="theme-content">
             <div class="theme-image">
@@ -838,9 +836,8 @@ body {
 <div id="fifth-output-screen" class="screen">
     <div class="output-container">
         <h1 class="output-header" style="font-size: 32px;">MORE DETAILS FOR THE SELECTED THEME:</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">NEW METHODOLOGY (1)</h1>
-
+        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING NEW METHODOLOGY (1)</h1>
+        
         <!-- First Selected New Method Idea -->
         <div class="theme-content">
             <div class="theme-image">
@@ -878,9 +875,8 @@ body {
 <div id="sixth-output-screen" class="screen">
     <div class="output-container">
         <h1 class="output-header" style="font-size: 32px;">MORE DETAILS FOR THE SELECTED THEME:</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING</h1>
-        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">NEW METHODOLOGY (2)</h1>
-
+        <h1 class="output-header" style="color: #0000FF; font-size: 32px;">IDEA & TRAINERS USING NEW METHODOLOGY (2)</h1>
+        
         <!-- Second Selected New Method Idea -->
         <div class="theme-content">
             <div class="theme-image">
@@ -1528,10 +1524,13 @@ document.querySelector('#fifth-output-screen .action-button:last-child').onclick
 
 // Update the sixth output screen's NEXT button onclick
 document.querySelector('#sixth-output-screen .action-button:last-child').onclick = function() {
-    showScreen('conclusion-screen');
-    updateAttemptsDisplay();
+    showFinalScreen();
 };
 
+function showFinalScreen() {
+    showScreen('conclusion-screen');
+    updateAttemptsDisplay();
+}
 function toggleText(elementId) {
   const textElement = document.getElementById(elementId);
   const button = textElement.nextElementSibling;
