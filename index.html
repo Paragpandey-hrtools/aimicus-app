@@ -609,7 +609,16 @@
         gap: 10px;
     }
 }
-
+@media (max-width: 480px) {
+    .summary-grid {
+        gap: 10px;
+        padding: 0 10px;  /* Added padding */
+    }
+    
+    .output-container {
+        padding: 10px;  /* Adjusted padding */
+    }
+}
     </style>
 </head>
 <body>
@@ -758,7 +767,7 @@
     <div id="second-output-screen" class="screen">
         <div class="output-container">
             <div class="output-header">
-                <h1 style="color: #0000FF; font-size: 32px;">TRAINING ACADEMIES, UNIVS & FIRMS</h1>
+                <h1 style="color: #0000FF; font-size: 24px;">TRAINING ACADEMIES, UNIVS & FIRMS</h1>
             </div>
 
 <!-- First Selected Trainer -->
@@ -912,7 +921,7 @@
                 GO BACK
             </button>
             <button class="action-button" onclick="handleNewMethodsSelection()">
-                GET DETAILS
+                NEXT
             </button>
         </div>
     </div>
