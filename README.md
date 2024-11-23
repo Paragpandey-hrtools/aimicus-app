@@ -1,2 +1,2 @@
 # aimicus-app
-An app to provide useful information with which the user can elevate their leadership development efforts
+An app that provides useful information with which the user can align and respond to the new expectations that are emerging in the area of leadership development
